@@ -2,7 +2,8 @@
 
 A machine learning system for predicting household appliance energy consumption 2 hours ahead using time-series forecasting and XGBoost quantile regression.
 
-![App Screenshot](docs/app_screenshot.png)
+<img width="1296" height="657" alt="image" src="https://github.com/user-attachments/assets/2b0c41b0-08b5-49eb-b6c8-40e2819cb116" />
+
 
 ## 📋 Description
 
