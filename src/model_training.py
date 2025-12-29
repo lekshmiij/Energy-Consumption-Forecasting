@@ -19,6 +19,9 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error
 import matplotlib.pyplot as plt
 import warnings
 from typing import Tuple, Dict, Any
+from config import DataPaths, ModelPaths
+data_paths = DataPaths()
+model_paths = ModelPaths()
 
 warnings.filterwarnings('ignore')
 
@@ -542,9 +545,9 @@ def main():
     Main execution function for model training pipeline.
     """
     # Configuration
-    DATA_PATH = 'data/processed/engineered_features.csv'
-    FEATURE_PATH = 'data/features/feature_names.txt'
-    OUTPUT_DIR = 'models'
+    DATA_PATH = data_paths.engineered_features
+    FEATURE_PATH = data_paths.processed_dir / 'feature_names.txt'
+    OUTPUT_DIR = model_paths.models_dir
     RANDOM_SEED = 42
     
     print("="*80)
@@ -618,17 +621,22 @@ def main():
     print("Saving model and results...")
     print("="*80)
     
-    trainer.save_model(OUTPUT_DIR)
+    trainer.save_model(model_paths.models_dir)
     trainer.save_predictions(
         test, y_test, pred_test_raw, pred_test_smoothed,
-        eval_results['final_predictions'], f"{OUTPUT_DIR}/predictions"
+        eval_results['final_predictions'], model_paths.predictions_dir
     )
-    trainer.save_feature_importance(importance_df, OUTPUT_DIR)
+    trainer.save_feature_importance(importance_df, model_paths.models_dir)
     trainer.save_metadata(
         len(features), len(train), len(val), len(test),
-        eval_results, OUTPUT_DIR
+        eval_results, model_paths.models_dir
     )
-    trainer.save_split_info(OUTPUT_DIR)
+    trainer.save_split_info(model_paths.models_dir)
+    trainer.create_quick_visualization(
+        y_test, eval_results['final_predictions'],
+        n_plot=500, output_dir=model_paths.predictions_dir
+    )
+
     
     # Create visualization
     print("\n" + "="*80)

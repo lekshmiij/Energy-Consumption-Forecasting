@@ -2,18 +2,21 @@
 Feature Engineering and Preprocessing Module for Energy Prediction
 ===================================================================
 This module contains all feature engineering functions for the appliances 
-energy prediction project. It creates 49 engineered features from raw 
-time-series data.
+energy prediction project. 
 
-Author: Energy Prediction Team
-Date: 2024
+Author: Lekshmi
+Date: 2025
 """
+import os
+print("Current working directory:", os.getcwd())
 
 import pandas as pd
 import numpy as np
 import warnings
 from typing import Tuple, List
-import os
+from config import data_paths
+
+
 
 warnings.filterwarnings('ignore')
 
@@ -22,7 +25,7 @@ class EnergyFeatureEngineering:
     """
     A comprehensive feature engineering pipeline for energy consumption prediction.
     
-    This class handles the creation of 49 features across multiple categories:
+    This class handles the creation of features across multiple categories:
     - Time-based features (8)
     - Lag features (7)
     - Rolling statistics (5 means, 6 extremes, 4 percentiles)
@@ -608,9 +611,8 @@ class EnergyFeatureEngineering:
         return final_data
 
 
-def save_engineered_features(final_data: pd.DataFrame, feature_names: List[str],
-                             output_dir: str = 'data/processed',
-                             features_dir: str = 'data/features') -> None:
+def save_engineered_features(final_data: pd.DataFrame, feature_names: List[str]) -> None:
+
     """
     Saves the engineered features and feature names to files.
     
@@ -621,19 +623,20 @@ def save_engineered_features(final_data: pd.DataFrame, feature_names: List[str],
         features_dir (str): Directory to save feature names
     """
     # Create directories if they don't exist
-    os.makedirs(output_dir, exist_ok=True)
-    os.makedirs(features_dir, exist_ok=True)
+    data_paths.processed_dir.mkdir(parents=True, exist_ok=True)
+
     
     # Save complete engineered dataset
-    output_path = os.path.join(output_dir, 'engineered_features.csv')
-    final_data.to_csv(output_path, index=False)
-    print(f"✓ Saved processed features to: {output_path}")
+    final_data.to_csv(data_paths.engineered_features, index=False)
+    print(f"✓ Saved processed features to: {data_paths.engineered_features}")
+
     
     # Save feature names
-    feature_names_path = os.path.join(features_dir, 'feature_names.txt')
-    with open(feature_names_path, 'w') as f:
-        f.write('\n'.join(feature_names))
+    feature_names_path = data_paths.processed_dir / "feature_names.txt"
+    with open(feature_names_path, "w") as f:
+        f.write("\n".join(feature_names))
     print(f"✓ Saved feature names to: {feature_names_path}")
+
 
 
 def main():
@@ -641,7 +644,8 @@ def main():
     Main execution function for the feature engineering pipeline.
     """
     # Configuration
-    INPUT_PATH = 'C:/Users/lekshmi/Desktop/ml projects/appliances energy prediction/KAG_energydata_complete.csv'
+    INPUT_PATH = data_paths.raw_data
+    #INPUT_PATH = 'C:/Users/lekshmi/Desktop/ml projects/appliances energy prediction/KAG_energydata_complete.csv'
     HORIZON_HOURS = 2
     
     print("="*70)
@@ -651,6 +655,7 @@ def main():
     # Load raw data
     print(f"\nLoading data from: {INPUT_PATH}")
     df = pd.read_csv(INPUT_PATH)
+
     print(f"Raw data shape: {df.shape}")
     print(f"Columns: {df.columns.tolist()}")
     

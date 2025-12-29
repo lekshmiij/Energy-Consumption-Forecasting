@@ -24,7 +24,11 @@ import os
 from typing import Dict, List, Tuple, Any
 import warnings
 
+
 warnings.filterwarnings('ignore')
+from config import DataPaths,ModelPaths
+data_paths = DataPaths()
+paths = ModelPaths()
 
 
 class EnergyModelEvaluator:
@@ -352,7 +356,7 @@ class EnergyModelEvaluator:
         plt.grid(True, alpha=0.3)
         plt.tight_layout()
         
-        save_path = os.path.join(output_dir, 'timeseries_comparison.png')
+        save_path = os.path.join(output_dir/ 'timeseries_comparison.png')
         plt.savefig(save_path, dpi=150, bbox_inches='tight')
         plt.close()
         
@@ -393,7 +397,7 @@ class EnergyModelEvaluator:
         plt.grid(True, alpha=0.3)
         plt.tight_layout()
         
-        save_path = os.path.join(output_dir, 'scatter_plot.png')
+        save_path = os.path.join(output_dir/ 'scatter_plot.png')
         plt.savefig(save_path, dpi=150, bbox_inches='tight')
         plt.close()
         
@@ -421,7 +425,7 @@ class EnergyModelEvaluator:
         plt.grid(True, alpha=0.3)
         plt.tight_layout()
         
-        save_path = os.path.join(output_dir, 'error_distribution.png')
+        save_path = os.path.join(output_dir/ 'error_distribution.png')
         plt.savefig(save_path, dpi=150, bbox_inches='tight')
         plt.close()
         
@@ -447,7 +451,7 @@ class EnergyModelEvaluator:
         plt.grid(True, alpha=0.3)
         plt.tight_layout()
         
-        save_path = os.path.join(output_dir, 'residual_plot.png')
+        save_path = os.path.join(output_dir/ 'residual_plot.png')
         plt.savefig(save_path, dpi=150, bbox_inches='tight')
         plt.close()
         
@@ -512,7 +516,7 @@ class EnergyModelEvaluator:
             }
         }
         
-        report_path = os.path.join(output_dir, 'evaluation_report.json')
+        report_path = os.path.join(output_dir/'evaluation_report.json')
         with open(report_path, 'w') as f:
             json.dump(report, f, indent=2)
         
@@ -615,10 +619,10 @@ def main():
     Main execution function for model evaluation.
     """
     # Configuration
-    PREDICTIONS_PATH = 'preprocessing/FINAL BOOKS/models/predictions/test_predictions.csv'
-    METADATA_PATH = 'preprocessing/FINAL BOOKS/models/training_metadata.json'
-    OUTPUT_DIR = 'models/evaluation'
-    
+    PREDICTIONS_PATH = paths.test_predictions          # points to models/predictions/test_predictions.csv
+    METADATA_PATH = paths.training_metadata            # points to models/training_metadata.json
+    OUTPUT_DIR = paths.evaluation_dir                 # points to models/evaluation
+        
     print("="*80)
     print("Energy Prediction - Model Evaluation Pipeline")
     print("="*80)

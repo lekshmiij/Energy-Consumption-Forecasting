@@ -22,6 +22,8 @@ import json
 from datetime import datetime, timedelta
 from typing import Tuple, Dict, Any
 import warnings
+from src.config import DataPaths, ModelPaths
+
 
 warnings.filterwarnings('ignore')
 
@@ -496,9 +498,11 @@ def main():
     Main function to launch the application.
     """
     # Configuration
-    MODEL_PATH = 'preprocessing/FINAL BOOKS/models/xgboost_model.pkl'
-    TEST_DATA_PATH = 'preprocessing/FINAL BOOKS/data/processed/engineered_features.csv'
-    FEATURE_NAMES_PATH = 'preprocessing/FINAL BOOKS/data/features/feature_names.txt'    
+    data_paths = DataPaths()
+    model_paths = ModelPaths()
+    MODEL_PATH = model_paths.xgboost_pickle
+    TEST_DATA_PATH = data_paths.engineered_features
+    FEATURE_NAMES_PATH = data_paths.processed_dir / "feature_names.txt"   
     
     print("="*80)
     print("⚡ Appliance Energy Prediction Dashboard")
