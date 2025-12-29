@@ -173,7 +173,7 @@ cython_debug/
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
+.idea/
 
 # Abstra
 # Abstra is an AI-powered process automation framework.
@@ -186,7 +186,7 @@ cython_debug/
 #  that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
 #  and can be added to the global gitignore or merged into this file. However, if you prefer, 
 #  you could uncomment the following to ignore the entire vscode folder
-# .vscode/
+.vscode/
 
 # Ruff stuff:
 .ruff_cache/
@@ -205,3 +205,49 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# =============================================================================
+# PROJECT SPECIFIC - Energy Prediction
+# =============================================================================
+
+# Data Files (exclude large datasets from git)
+*.csv
+*.xlsx
+*.xls
+*.parquet
+*.feather
+*.h5
+*.hdf5
+
+# Model Files (these can be large - don't commit to git)
+models/*.pkl
+models/*.json
+models/*.model
+models/*.bin
+models/predictions/*.csv
+models/evaluation/*.png
+models/evaluation/*.json
+
+# Processed Data
+data/raw/*.csv
+data/processed/*.csv
+data/features/*.txt
+
+# Gradio
+gradio_cached_examples/
+flagged/
+
+# OS specific
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Logs
+logs/
+*.out
